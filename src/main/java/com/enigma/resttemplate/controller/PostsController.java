@@ -1,14 +1,13 @@
 package com.enigma.resttemplate.controller;
 
 import com.enigma.resttemplate.entity.Posts;
+import com.enigma.resttemplate.model.response.GetAllDataPostsResponse;
+import com.enigma.resttemplate.model.response.PostsResponse;
 import com.enigma.resttemplate.service.PostsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -16,8 +15,8 @@ import org.springframework.web.client.RestTemplate;
 public class PostsController {
     private final PostsService postsService;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getAllPosts(){
+    @GetMapping
+    public ResponseEntity<Posts[]> getAllPosts(){
        return postsService.getAllPost();
     }
 
@@ -32,7 +31,12 @@ public class PostsController {
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> createNewPosts(@RequestBody Posts posts){
+    public ResponseEntity<PostsResponse> createNewPosts(@RequestBody Posts posts){
         return postsService.creatPosts(posts);
+    }
+
+    @GetMapping("/getAllData")
+    public ResponseEntity<GetAllDataPostsResponse> getAllData() {
+        return postsService.getAllData();
     }
 }
