@@ -42,13 +42,11 @@ public class PostsService {
     }
 
     public ResponseEntity<PostsResponse> creatPosts(Posts posts){
-        String apiUrl = BASE_URL + "/posts";
         //Mengatur header permintaanya
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        //membungkus data permintaan dalam HttpEntity
-        HttpEntity<Posts> requesEntity = new HttpEntity<>(posts,headers);
         postsRepository.save(posts);
+
         //Response Posts
         PostsResponse response = new PostsResponse();
         response.setIdPost(posts.getId());  // Isi dengan ID yang sesuai
